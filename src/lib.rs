@@ -1,10 +1,5 @@
 #[cfg(feature = "random")]
-use {
-    rand::{
-        seq::SliceRandom,
-        thread_rng,
-    }
-};
+use rand::{seq::SliceRandom, thread_rng};
 
 fn get_pivot<T: Ord + Clone>(slice: &[T]) -> T {
     // base case
@@ -13,7 +8,7 @@ fn get_pivot<T: Ord + Clone>(slice: &[T]) -> T {
         v.sort_unstable();
         return v[slice.len() / 2].clone();
     }
-    
+
     // create array of size n / 5
     let groups = slice.len().div_ceil(5);
     let mut medians: Vec<T> = Vec::with_capacity(groups);
@@ -44,9 +39,9 @@ fn get_kth_smallest<T: Ord + Clone>(k: usize, slice: &[T]) -> T {
     if left.len() == k - 1 {
         return pivot;
     } else if left.len() > k - 1 {
-        return get_kth_smallest(k, &left)
+        return get_kth_smallest(k, &left);
     } else {
-        return get_kth_smallest(k - left.len() -1, &right);
+        return get_kth_smallest(k - left.len() - 1, &right);
     }
 }
 
@@ -96,17 +91,17 @@ mod tests {
 
 #[cfg(feature = "random")]
 mod tests_random {
-    use rand::{thread_rng, seq::SliceRandom};
     use crate::get_kth_smallest;
+    use rand::{seq::SliceRandom, thread_rng};
 
     #[test]
     fn kth_smallest_batch() {
         let size = 1000;
         let mut v: Vec<usize> = (1..size).collect();
-    
+
         // Create the random number generator
         let mut rng = thread_rng();
-        
+
         // Shuffle the vector in place (O(n) time complexity)
         v.shuffle(&mut rng);
 
